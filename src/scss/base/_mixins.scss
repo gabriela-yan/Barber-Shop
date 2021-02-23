@@ -10,7 +10,13 @@
         @content;
     }
 }
-  
+
+@mixin  tablet-custom {
+    @media (min-width: #{$tablet-custom}) {
+        @content;
+    }
+}
+
 @mixin desktop {
     @media (min-width: #{$desktop}) {
         @content;
