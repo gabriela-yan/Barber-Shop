@@ -1,16 +1,19 @@
 .container-barbershop {
-    @include tablet {
+    @include tablet-custom {
         height: 100vh;
         @include grid(2, $break / 2);
     }
     .image {
-        height: 50rem;
+        height: 30rem;
         background-color: #0084AA;
         background-image: url(../img/main-logo.jpg);
         background-repeat: no-repeat;
         background-size: 100%;
         background-position: center center;
-        @include tablet {
+        @include phone {
+            height: 50rem;
+        }
+        @include tablet-custom {
             height: auto;
         }
     }
@@ -28,7 +31,10 @@
             text-align: left;
         }
         &:first-of-type {
-            display: block;
+            margin-bottom: $break / 2;
         }
     }
+}
+.show-section {
+    display: block !important;
 }

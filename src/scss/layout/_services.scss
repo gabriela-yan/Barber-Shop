@@ -14,13 +14,13 @@
             color: $white;
             margin: 0 0 $break / 4 0;
         }
-        .name-service {
-            
-        }
         .price-service {
             margin: 0;
             font-size: 3rem;
             font-weight: $bold;
+        }
+        &.selected {
+            background-color: darken($color: $blue, $amount: 20);
         }
     }
 }
