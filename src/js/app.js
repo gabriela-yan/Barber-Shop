@@ -5,17 +5,35 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 function initApp(){
+    // Query the services.json file through fetch and display it in the HTML
     showServices();
     // Highlight the current DIV according to the tab that is pressed
     showSection();
     // Hide or show a section according to the tab that is pressed
     changeSection()
+    // Next and previous page
+    nextPage();
+    previousPage();
+    // Check current page to hide or show pagination
+    pagerButtons();
 }
 
 function showSection() {
+    // Remove the show-section class from the previous section
+    const nextSection = document.querySelector('.show-section');
+    if(nextSection) {
+        nextSection.classList.remove('show-section');
+    }
+    
     const currentSection = document.querySelector(`#step-${page}`);
     currentSection.classList.add('show-section');
 
+    // Delete the Current class in the previous tab
+    const currentTab = document.querySelector('.tabs button.current');
+    if(currentTab) {
+        currentTab.classList.remove('current');
+    }
+    
     // Highlight the current tab
     const tab = document.querySelector(`[data-step="${page}"]`);
     tab.classList.add('current');
@@ -28,19 +46,10 @@ function changeSection() {
             e.preventDefault();
             page = parseInt(e.target.dataset.step);
             
-            // Remove the show-section class from the previous section
-            document.querySelector('.show-section').classList.remove('show-section');
+            // Call showSection function
+            showSection();
 
-            // Add show-section where we clicked
-            const section = document.querySelector(`#step-${page}`);
-            section.classList.add('show-section');
-
-            // Delete the Current class in the previous tab
-            document.querySelector('.tabs button.current').classList.remove('current');
-            
-            // Add the Current class in the new tab
-            const tab = document.querySelector(`[data-step="${page}"]`);
-            tab.classList.add('current');
+            pagerButtons();
         })
     })
 }
@@ -83,6 +92,7 @@ async function showServices(){
         console.log(error);
     }
 }
+
 function selectedService(event) {
     let element;
     //Force the element we click to be the DIV
@@ -96,4 +106,38 @@ function selectedService(event) {
     } else {
         element.classList.add('selected');
     }
+}
+
+function nextPage(){
+    const nextPage = document.querySelector('#next');
+    nextPage.addEventListener('click', () => {
+        page++;
+        console.log(page);
+        pagerButtons();
+    });
+}
+
+function previousPage(){
+    const previousPage = document.querySelector('#previous');
+    previousPage.addEventListener('click', () => {
+        page--;
+        console.log(page);
+        pagerButtons();
+    });
+}
+
+function pagerButtons() {
+    const nextPage = document.querySelector('#next');
+    const previousPage = document.querySelector('#previous');
+    if(page === 1) {
+        previousPage.classList.add('hide');
+        nextPage.classList.remove('hide');
+    } else if(page === 3) {
+        nextPage.classList.add('hide');
+        previousPage.classList.remove('hide');
+    } else {
+        previousPage.classList.remove('hide');
+        nextPage.classList.remove('hide');
+    }
+    showSection();
 }

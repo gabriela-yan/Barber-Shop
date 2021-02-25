@@ -13,6 +13,8 @@
         color: $white;
         border: none;
         text-transform: uppercase;
+        border-radius: 3rem;
+        outline: none;
         &.current {
             background-color: darken($color: $blue, $amount: 20);
         }

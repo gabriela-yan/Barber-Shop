@@ -1,0 +1,25 @@
+.pagination {
+    display: flex;
+    justify-content: space-between;
+    padding: $break / 3 0;
+    margin-bottom: 3rem;
+    button {
+        display: block;
+        background-color: $blue;
+        color: $white;
+        padding: 1.5rem 3rem;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 1.6rem;
+        font-weight: $bold;
+        border: none;
+        border-radius: 3rem;
+        outline: none;
+        &.hide {
+            visibility: hidden;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
