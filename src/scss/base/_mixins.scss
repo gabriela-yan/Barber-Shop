@@ -1,4 +1,9 @@
 /** Media Queries **/
+@mixin fold {
+    @media (max-width: #{$fold}) {
+        @content;
+    }
+}
 @mixin phone {
     @media (min-width: #{$phone}) {
         @content;

@@ -1,0 +1,35 @@
+.form {
+    width: 100%;
+    margin-top: 3.5rem;
+}
+
+.field {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    @include fold {
+        display: block;
+    }
+    label {
+        flex-basis: 10rem;
+        color: $blue;
+
+        @include fold {
+            display: block;
+            margin-bottom: 1rem;
+        }
+    }
+    input {
+        flex: 1;
+        padding: $break / 4;
+        border-radius: 2rem;
+        border: 2px solid $gray;
+        color: $blue;
+
+        @include fold {
+            display: block;
+            width: 100%;
+        }
+    }
+}
