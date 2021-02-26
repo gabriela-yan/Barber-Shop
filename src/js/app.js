@@ -1,5 +1,12 @@
 let page = 1;
 
+const appointment = {
+    name: '',
+    date: '',
+    hour: '',
+    services: []
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     initApp();
 })
@@ -16,6 +23,8 @@ function initApp(){
     previousPage();
     // Check current page to hide or show pagination
     pagerButtons();
+    // It shows the summary of the appointment (or message in case of not passing the validation)
+    showResume();
 }
 
 function showSection() {
@@ -101,11 +110,37 @@ function selectedService(event) {
     } else {
         element = event.target;
     }
+
     if(element.classList.contains('selected')){
         element.classList.remove('selected');
+
+        const id = parseInt(element.dataset.idService);
+
+        deleteService(id);
     } else {
         element.classList.add('selected');
+
+        const serviceObj = {
+            id: parseInt(element.dataset.idService),
+            nombre: element.firstElementChild.textContent,
+            precio: element.firstElementChild.nextElementSibling.textContent
+        }
+    
+        addService(serviceObj);
     }
+}
+
+function deleteService(id) {
+    const { services } = appointment;
+    appointment.services = services.filter(service => service.id !== id);
+
+    console.log(appointment);
+}
+
+function addService(serviceObj) {
+    const { services } = appointment;
+    appointment.services = [...services, serviceObj];
+    console.log(appointment);
 }
 
 function nextPage(){
@@ -140,4 +175,22 @@ function pagerButtons() {
         nextPage.classList.remove('hide');
     }
     showSection();
+}
+
+function showResume() {
+    // Destructuring
+    const { name, date, hour, services } = appointment;
+
+    // Selected summary
+    const divSummary =document.querySelector('.content-summary');
+
+    // Validate object
+    if(Object.values(appointment).includes('')){
+        const noServices = document.createElement('P');
+        noServices.textContent = 'Faltan datos de servicios, hora, fecha o nombre';
+        noServices.classList.add('invalidate-appointment');
+
+        // Add to divSummary
+        divSummary.appendChild(noServices);
+    }
 }
