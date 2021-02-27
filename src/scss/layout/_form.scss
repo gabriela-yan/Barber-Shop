@@ -26,10 +26,22 @@
         border-radius: 2rem;
         border: 2px solid $gray;
         color: $blue;
-
+        outline: none;
         @include fold {
             display: block;
             width: 100%;
         }
     }
+}
+.alert {
+    padding: $break / 2;
+    text-align: center;
+    color: $white;
+    width: 100%;
+    border-radius: 3rem;
+    display: block;
+    &.error {
+        background-color: #FF144C;
+    }
+    
 }

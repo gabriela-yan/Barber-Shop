@@ -25,6 +25,12 @@ function initApp(){
     pagerButtons();
     // It shows the summary of the appointment (or message in case of not passing the validation)
     showResume();
+    // Stores the name of the appointment in the object
+    nameAppointment();
+    // Stores the date of the appointment in the object
+    dateAppointment();
+    // Disable days past
+    disableDatePast();
 }
 
 function showSection() {
@@ -193,4 +199,89 @@ function showResume() {
         // Add to divSummary
         divSummary.appendChild(noServices);
     }
+}
+
+function nameAppointment() {
+    const nameInput = document.querySelector('#name');
+
+    nameInput.addEventListener('input', event => {
+        const nameTxt = event.target.value.trim();
+        // Validation
+        if(nameTxt === '' || nameTxt.length < 3) {
+            showAlert('Nombre no válido', 'error');
+        } else {
+            const alert = document.querySelector('.alert');
+            if(alert) {
+                alert.remove();
+            }
+            appointment.name = nameTxt;
+        }
+    })
+}
+
+function showAlert(message, type) {
+    // If there is a previous alert, then do not create another
+    const previousAlert = document.querySelector('.alert');
+    if(previousAlert) {
+        return;
+    }
+
+    const alert = document.createElement('DIV');
+    alert.textContent = message;
+    alert.classList.add('alert');
+    if(type === 'error') {
+        alert.classList.add('error');
+    }
+
+    // Insert HTML
+    const form = document.querySelector('.form');
+    form.appendChild(alert);
+
+    // Delete alert after 3 seconds
+    setTimeout(() => {
+        alert.remove();
+    },3000)
+}
+
+function dateAppointment() {
+    const dateInput = document.querySelector('#date');
+    dateInput.addEventListener('input', event => {
+        
+        const day = new Date(event.target.value).getUTCDay();
+        if([0, 6].includes(day)){
+            event.preventDefault();
+            dateInput.value = '';
+            showAlert('Fines de semana no laborales', 'error');
+        } else {
+            appointment.date = dateInput.value;
+            console.log(appointment);
+        }
+        // const options = {
+        //     weekday: 'long',
+        //     year: 'numeric',
+        //     month: 'long'
+        // }
+        // console.log(day.toLocaleDateString('es-ES', options));
+    })
+}
+
+function disableDatePast() {
+    const dateInput = document.querySelector('#date');
+    const dateNow = new Date();
+    const year = dateNow.getFullYear();
+    let month = dateNow.getMonth()+1;
+    const day = dateNow.getDate();
+
+    // Desired format YYYY-MM-DD
+    if(month < 10) {
+        month = `0${month}`;
+    } 
+
+    if(day < 10) {
+        day = `0${day}`;
+    }
+
+    const disableDate = `${year}-${month}-${day}`;
+
+    dateInput.min = disableDate; 
 }
