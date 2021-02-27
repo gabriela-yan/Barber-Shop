@@ -31,6 +31,8 @@ function initApp(){
     dateAppointment();
     // Disable days past
     disableDatePast();
+    // Stores the appointment time in the object
+    hourAppointment();
 }
 
 function showSection() {
@@ -153,7 +155,6 @@ function nextPage(){
     const nextPage = document.querySelector('#next');
     nextPage.addEventListener('click', () => {
         page++;
-        console.log(page);
         pagerButtons();
     });
 }
@@ -162,7 +163,6 @@ function previousPage(){
     const previousPage = document.querySelector('#previous');
     previousPage.addEventListener('click', () => {
         page--;
-        console.log(page);
         pagerButtons();
     });
 }
@@ -176,6 +176,7 @@ function pagerButtons() {
     } else if(page === 3) {
         nextPage.classList.add('hide');
         previousPage.classList.remove('hide');
+        showResume();
     } else {
         previousPage.classList.remove('hide');
         nextPage.classList.remove('hide');
@@ -190,6 +191,12 @@ function showResume() {
     // Selected summary
     const divSummary =document.querySelector('.content-summary');
 
+    //Clean previous HTML
+    // divSummary.innerHTML = '';
+    while(divSummary.firstChild) {
+        divSummary.removeChild(divSummary.firstChild);
+    }
+
     // Validate object
     if(Object.values(appointment).includes('')){
         const noServices = document.createElement('P');
@@ -198,7 +205,22 @@ function showResume() {
 
         // Add to divSummary
         divSummary.appendChild(noServices);
-    }
+        return;
+    } 
+
+    // Show summary
+    const nameAppointment = document.createElement('P');
+    nameAppointment.innerHTML = `<span>Nombre:</span> ${name}`;
+
+    const dateAppointment = document.createElement('P');
+    dateAppointment.innerHTML = `<span>Fecha:</span> ${date}`;
+
+    const hourAppointment = document.createElement('P');
+    hourAppointment.innerHTML = `<span>Hora:</span> ${hour}`;
+
+    divSummary.appendChild(nameAppointment);
+    divSummary.appendChild(dateAppointment);
+    divSummary.appendChild(hourAppointment);
 }
 
 function nameAppointment() {
@@ -284,4 +306,20 @@ function disableDatePast() {
     const disableDate = `${year}-${month}-${day}`;
 
     dateInput.min = disableDate; 
+}
+
+function hourAppointment() {
+    const hourInput = document.querySelector('#hour');
+    hourInput.addEventListener('input', event => {
+        const hourAppointment = event.target.value;
+        const hour = hourAppointment.split(':');
+        if(hour[0] < 10 || hour[0] > 18){
+            showAlert('No se aceptan citas en ese horario','error');
+            setTimeout(()=>{
+                hourInput.value = '';
+            },3000);
+        } else {
+            appointment.hour = hourAppointment;
+        }
+    })
 }
