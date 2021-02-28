@@ -3,3 +3,30 @@
     margin: $break / 2;
     text-transform: uppercase;
 }
+.content-summary {
+    p {
+        margin-bottom: .5rem;
+        span {
+            font-weight: $bold;
+            font-size: 2.4rem;
+        }
+    }
+    .summary-services {
+        margin-top: $break;
+        h3 {
+            margin: 2.5rem 0;
+        }
+        .container-service {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid $gray;
+            .price {
+                font-size: 2.4rem;
+                font-weight: $bold;
+            }
+        }
+    }
+}
+.total {
+    text-align: right;
+}

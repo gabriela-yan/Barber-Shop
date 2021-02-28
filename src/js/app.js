@@ -208,6 +208,9 @@ function showResume() {
         return;
     } 
 
+    const headingAppointment = document.createElement('H3');
+    headingAppointment.textContent = 'Resumen de cita';
+
     // Show summary
     const nameAppointment = document.createElement('P');
     nameAppointment.innerHTML = `<span>Nombre:</span> ${name}`;
@@ -218,9 +221,50 @@ function showResume() {
     const hourAppointment = document.createElement('P');
     hourAppointment.innerHTML = `<span>Hora:</span> ${hour}`;
 
+    const servicesAppointment = document.createElement('DIV');
+    servicesAppointment.classList.add('summary-services');
+
+    const headingServices = document.createElement('H3');
+    headingServices.textContent = 'Resumen de servicios';
+    servicesAppointment.appendChild(headingServices);
+
+    let quantity = 0;
+
+    // Iterate over the service arrangement
+    services.forEach( service => {
+        const { nombre, precio } = service;
+        const serviceContainer = document.createElement('DIV');
+        serviceContainer.classList.add('container-service');
+
+        const serviceTxt = document.createElement('P');
+        serviceTxt.textContent = nombre;
+
+        const servicePrice = document.createElement('P');
+        servicePrice.textContent = precio;
+        servicePrice.classList.add('price');
+
+        const serviceTotal = precio.split('$'); 
+        quantity += parseInt(serviceTotal[1].trim());
+
+        // Place price and text in the DIV
+        serviceContainer.appendChild(serviceTxt);
+        serviceContainer.appendChild(servicePrice);
+
+        servicesAppointment.appendChild(serviceContainer);
+    });
+
+    divSummary.appendChild(headingAppointment);
     divSummary.appendChild(nameAppointment);
     divSummary.appendChild(dateAppointment);
     divSummary.appendChild(hourAppointment);
+
+    divSummary.appendChild(servicesAppointment);
+
+    const amountToPay = document.createElement('P');
+    amountToPay.classList.add('total');
+    amountToPay.innerHTML = `<span>Total a pagar: </span>$ ${quantity}`;
+
+    divSummary.appendChild(amountToPay);
 }
 
 function nameAppointment() {
