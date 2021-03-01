@@ -2,7 +2,7 @@
     @include fold {
         display: block;
     }
-    @include grid(3, 2rem);
+    @include grid(3, 1rem);
     
     button {
         width: 100%;

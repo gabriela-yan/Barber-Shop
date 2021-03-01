@@ -334,7 +334,7 @@ function dateAppointment() {
 function disableDatePast() {
     const dateInput = document.querySelector('#date');
     const dateNow = new Date();
-    const year = dateNow.getFullYear();
+    let year = dateNow.getFullYear();
     let month = dateNow.getMonth()+1;
     let day = dateNow.getDate();
 

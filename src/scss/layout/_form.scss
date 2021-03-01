@@ -12,7 +12,7 @@
         display: block;
     }
     label {
-        flex-basis: 10rem;
+        flex:0 0 10rem;
         color: $blue;
 
         @include fold {
@@ -22,9 +22,10 @@
     }
     input {
         flex: 1;
-        padding: $break / 4;
+        width: 90%;
+        padding: 1rem;
         border-radius: 2rem;
-        border: 2px solid $gray;
+        border: 1px solid $gray;
         color: $blue;
         outline: none;
         @include fold {
